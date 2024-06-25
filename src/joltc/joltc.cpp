@@ -3940,7 +3940,7 @@ JPH_Bool32 JPH_NarrowPhaseQuery_CastRay3(const JPH_NarrowPhaseQuery* query,
 {
     JPH_ASSERT(query && origin && direction && callback);
     auto joltQuery = reinterpret_cast<const JPH::NarrowPhaseQuery*>(query);
-	auto joltRaycastSettings = reinterpret_cast<const JPH::RayCastSettings*>(raycastSettings);
+	auto joltRaycastSettings = reinterpret_cast<const RayCastSettings*>(raycastSettings);
 
     JPH::RRayCast ray(ToJolt(origin), ToJolt(direction));
     CastRayCollectorCallback collector(callback, userData);
