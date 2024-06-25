@@ -1181,8 +1181,8 @@ JPH_CAPI JPH_Bool32 JPH_NarrowPhaseQuery_CastRay2(const JPH_NarrowPhaseQuery* qu
 	JPH_BodyFilter* bodyFilter);
 
 JPH_CAPI JPH_Bool32 JPH_NarrowPhaseQuery_CastRay3(const JPH_NarrowPhaseQuery* query,
-	const JPH_RayCastSettings* rayCastSettings,
 	const JPH_RVec3* origin, const JPH_Vec3* direction,
+	const JPH_RayCastSettings* rayCastSettings,
 	JPH_CastRayCollector* callback, void* userData,
 	JPH_BroadPhaseLayerFilter* broadPhaseLayerFilter,
 	JPH_ObjectLayerFilter* objectLayerFilter,
