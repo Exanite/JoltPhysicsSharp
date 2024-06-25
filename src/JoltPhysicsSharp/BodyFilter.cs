@@ -10,7 +10,7 @@ public abstract class BodyFilter : NativeObject
 {
     private readonly JPH_BodyFilter_Procs _bodyFilter_Procs;
 
-    public BodyFilter()
+    public unsafe BodyFilter()
         : base(JPH_BodyFilter_Create())
     {
         nint context = DelegateProxies.CreateUserData(this, true);

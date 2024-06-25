@@ -10,7 +10,7 @@ public abstract class BroadPhaseLayerFilter : NativeObject
 {
     private readonly JPH_BroadPhaseLayerFilter_Procs _broadPhaseLayerFilter_Procs;
 
-    public BroadPhaseLayerFilter()
+    public unsafe BroadPhaseLayerFilter()
         : base(JPH_BroadPhaseLayerFilter_Create())
     {
         nint ctx = DelegateProxies.CreateUserData(this, true);

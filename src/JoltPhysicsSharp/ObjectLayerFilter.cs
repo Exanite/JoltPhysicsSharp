@@ -10,7 +10,7 @@ public abstract class ObjectLayerFilter : NativeObject
 {
     private readonly JPH_ObjectLayerFilter_Procs _objectLayerFilter_Procs;
 
-    public ObjectLayerFilter()
+    public unsafe ObjectLayerFilter()
         : base(JPH_ObjectLayerFilter_Create())
     {
         nint context = DelegateProxies.CreateUserData(this, true);
