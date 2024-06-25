@@ -3947,7 +3947,7 @@ JPH_Bool32 JPH_NarrowPhaseQuery_CastRay3(const JPH_NarrowPhaseQuery* query,
 
     joltQuery->CastRay(
         ray,
-        joltRaycastSettings,
+        *joltRaycastSettings,
         collector,
         ToJolt(broadPhaseLayerFilter),
         ToJolt(objectLayerFilter),
