@@ -297,9 +297,9 @@ static inline JPH::MotorSettings ToJolt(const JPH_MotorSettings* settings)
     return result;
 }
 
-static inline RayCastSettings ToJolt(const JPH_RayCastSettings* settings)
+static inline JPH::RayCastSettings ToJolt(const JPH_RayCastSettings* settings)
 {
-    RayCastSettings result{};
+    JPH::RayCastSettings result{};
 	result.mBackFaceMode = static_cast<EBackFaceMode>(settings->backFaceMode);
 	result.mTreatConvexAsSolid = ToJolt(settings->treatConvexAsSolid);
     return result;
@@ -3923,7 +3923,7 @@ JPH_Bool32 JPH_NarrowPhaseQuery_CastRay2(const JPH_NarrowPhaseQuery* query,
     auto joltQuery = reinterpret_cast<const JPH::NarrowPhaseQuery*>(query);
 
     JPH::RRayCast ray(ToJolt(origin), ToJolt(direction));
-    RayCastSettings ray_settings;
+    JPH::RayCastSettings ray_settings{};
     CastRayCollectorCallback collector(callback, userData);
 
     joltQuery->CastRay(
