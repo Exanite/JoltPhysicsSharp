@@ -3930,6 +3930,33 @@ JPH_Bool32 JPH_NarrowPhaseQuery_CastRay2(const JPH_NarrowPhaseQuery* query,
     return collector.hadHit;
 }
 
+JPH_Bool32 JPH_NarrowPhaseQuery_CastRay3(const JPH_NarrowPhaseQuery* query,
+	const JPH_RayCastSettings* raycastSettings,
+    const JPH_RVec3* origin, const JPH_Vec3* direction,
+    JPH_CastRayCollector* callback, void* userData,
+    JPH_BroadPhaseLayerFilter* broadPhaseLayerFilter,
+    JPH_ObjectLayerFilter* objectLayerFilter,
+    JPH_BodyFilter* bodyFilter)
+{
+    JPH_ASSERT(query && origin && direction && callback);
+    auto joltQuery = reinterpret_cast<const JPH::NarrowPhaseQuery*>(query);
+	auto joltRaycastSettings = reinterpret_cast<const JPH::RayCastSettings*>(query);
+
+    JPH::RRayCast ray(ToJolt(origin), ToJolt(direction));
+    CastRayCollectorCallback collector(callback, userData);
+
+    joltQuery->CastRay(
+        ray,
+        joltRaycastSettings,
+        collector,
+        ToJolt(broadPhaseLayerFilter),
+        ToJolt(objectLayerFilter),
+        ToJolt(bodyFilter)
+    );
+
+    return collector.hadHit;
+}
+
 JPH_Bool32 JPH_NarrowPhaseQuery_CollidePoint(const JPH_NarrowPhaseQuery* query,
 	const JPH_RVec3* point,
 	JPH_CollidePointCollector* callback, void* userData,
