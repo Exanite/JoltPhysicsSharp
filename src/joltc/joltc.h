@@ -383,6 +383,12 @@ typedef struct JPH_ShapeCastResult
     JPH_Bool32         isBackFaceHit;
 } JPH_ShapeCastResult;
 
+typedef struct JPH_RayCastSettings
+{
+	JPH_BackFaceMode backFaceMode;
+	JPH_Bool32 treatConvexAsSolid;
+} JPH_RayCastSettings;
+
 typedef float JPH_RayCastBodyCollector(void* context, JPH_BroadPhaseCastResult* result);
 typedef void JPH_CollideShapeBodyCollector(void* context, JPH_BodyID result);
 
@@ -1157,6 +1163,14 @@ JPH_CAPI JPH_Bool32 JPH_NarrowPhaseQuery_CastRay(const JPH_NarrowPhaseQuery* que
 	JPH_BodyFilter* bodyFilter);
 
 JPH_CAPI JPH_Bool32 JPH_NarrowPhaseQuery_CastRay2(const JPH_NarrowPhaseQuery* query,
+	const JPH_RVec3* origin, const JPH_Vec3* direction,
+	JPH_CastRayCollector* callback, void* userData,
+	JPH_BroadPhaseLayerFilter* broadPhaseLayerFilter,
+	JPH_ObjectLayerFilter* objectLayerFilter,
+	JPH_BodyFilter* bodyFilter);
+
+JPH_CAPI JPH_Bool32 JPH_NarrowPhaseQuery_CastRay3(const JPH_NarrowPhaseQuery* query,
+	const JPH_RayCastSettings* raycastSettings,
 	const JPH_RVec3* origin, const JPH_Vec3* direction,
 	JPH_CastRayCollector* callback, void* userData,
 	JPH_BroadPhaseLayerFilter* broadPhaseLayerFilter,
