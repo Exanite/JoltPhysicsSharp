@@ -297,6 +297,14 @@ static inline JPH::MotorSettings ToJolt(const JPH_MotorSettings* settings)
     return result;
 }
 
+static inline RayCastSettings ToJolt(const JPH_RayCastSettings* settings)
+{
+    RayCastSettings result{};
+	result.mBackFaceMode = static_cast<EBackFaceMode>(settings->backFaceMode);
+	result.mTreatConvexAsSolid = ToJolt(settings->treatConvexAsSolid);
+    return result;
+}
+
 void JPH_MassProperties_DecomposePrincipalMomentsOfInertia(JPH_MassProperties* properties, JPH_Matrix4x4* rotation, JPH_Vec3* diagonal)
 {
 	JPH::Mat44 joltRotation;
@@ -3931,7 +3939,7 @@ JPH_Bool32 JPH_NarrowPhaseQuery_CastRay2(const JPH_NarrowPhaseQuery* query,
 }
 
 JPH_Bool32 JPH_NarrowPhaseQuery_CastRay3(const JPH_NarrowPhaseQuery* query,
-	const JPH_RayCastSettings* raycastSettings,
+	const JPH_RayCastSettings* rayCastSettings,
     const JPH_RVec3* origin, const JPH_Vec3* direction,
     JPH_CastRayCollector* callback, void* userData,
     JPH_BroadPhaseLayerFilter* broadPhaseLayerFilter,
@@ -3940,14 +3948,13 @@ JPH_Bool32 JPH_NarrowPhaseQuery_CastRay3(const JPH_NarrowPhaseQuery* query,
 {
     JPH_ASSERT(query && origin && direction && callback);
     auto joltQuery = reinterpret_cast<const JPH::NarrowPhaseQuery*>(query);
-	auto joltRaycastSettings = reinterpret_cast<const RayCastSettings*>(raycastSettings);
 
     JPH::RRayCast ray(ToJolt(origin), ToJolt(direction));
     CastRayCollectorCallback collector(callback, userData);
 
     joltQuery->CastRay(
         ray,
-        *joltRaycastSettings,
+        ToJolt(rayCastSettings),
         collector,
         ToJolt(broadPhaseLayerFilter),
         ToJolt(objectLayerFilter),
