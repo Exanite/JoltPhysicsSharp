@@ -113,7 +113,59 @@ public readonly struct NarrowPhaseQuery : IEquatable<NarrowPhaseQuery>
                 bodyFilter?.Handle ?? 0);
             return result;
         }
-    } 
+    }
+
+    public unsafe bool CastRay(
+        in Vector3 origin,
+        in Vector3 direction,
+        in RayCastSettings rayCastSettings,
+        delegate* unmanaged<void*, RayCastResult*, float> callback, void* userData,
+        BroadPhaseLayerFilter? broadPhaseFilter = default,
+        ObjectLayerFilter? objectLayerFilter = default,
+        BodyFilter? bodyFilter = default)
+    {
+        if (DoublePrecision)
+            throw new InvalidOperationException($"Double precision is enabled: use {nameof(CastRay)}");
+
+        fixed (Vector3* originPtr = &origin)
+        fixed (Vector3* directionPtr = &direction)
+        fixed (RayCastSettings* rayCastSettingsPtr = &rayCastSettings)
+        {
+            Bool32 result = JPH_NarrowPhaseQuery_CastRay3(Handle, originPtr, directionPtr,
+                rayCastSettingsPtr,
+                callback, userData,
+                broadPhaseFilter?.Handle ?? 0,
+                objectLayerFilter?.Handle ?? 0,
+                bodyFilter?.Handle ?? 0);
+            return result;
+        }
+    }
+
+    public unsafe bool CastRay(
+        in Double3 origin,
+        in Vector3 direction,
+        in RayCastSettings rayCastSettings,
+        delegate* unmanaged<void*, RayCastResult*, float> callback, void* userData,
+        BroadPhaseLayerFilter? broadPhaseFilter = default,
+        ObjectLayerFilter? objectLayerFilter = default,
+        BodyFilter? bodyFilter = default)
+    {
+        if (!DoublePrecision)
+            throw new InvalidOperationException($"Double precision is disabled: use {nameof(CastRay)}");
+
+        fixed (Double3* originPtr = &origin)
+        fixed (Vector3* directionPtr = &direction)
+        fixed (RayCastSettings* rayCastSettingsPtr = &rayCastSettings)
+        {
+            Bool32 result = JPH_NarrowPhaseQuery_CastRay3Double(Handle, originPtr, directionPtr,
+                rayCastSettingsPtr,
+                callback, userData,
+                broadPhaseFilter?.Handle ?? 0,
+                objectLayerFilter?.Handle ?? 0,
+                bodyFilter?.Handle ?? 0);
+            return result;
+        }
+    }
     #endregion
 
     #region CollidePoint

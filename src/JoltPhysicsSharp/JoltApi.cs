@@ -1251,6 +1251,24 @@ internal static unsafe partial class JoltApi
         nint objectLayerFilter,
         nint bodyFilter);
 
+    [LibraryImport(LibName, EntryPoint = nameof(JPH_NarrowPhaseQuery_CastRay3))]
+    public static partial Bool32 JPH_NarrowPhaseQuery_CastRay3(nint system,
+        Vector3* origin, Vector3* direction,
+        RayCastSettings* rayCastSettings,
+        delegate* unmanaged<void*, RayCastResult*, float> callback, void* userData,
+        IntPtr broadPhaseLayerFilter,
+        IntPtr objectLayerFilter,
+        IntPtr bodyFilter);
+
+    [LibraryImport(LibName, EntryPoint = nameof(JPH_NarrowPhaseQuery_CastRay3))]
+    public static partial Bool32 JPH_NarrowPhaseQuery_CastRay3Double(nint system,
+        Double3* origin, Vector3* direction,
+        RayCastSettings* rayCastSettings,
+        delegate* unmanaged<void*, RayCastResult*, float> callback, void* userData,
+        nint broadPhaseLayerFilter,
+        nint objectLayerFilter,
+        nint bodyFilter);
+
     [LibraryImport(LibName, EntryPoint = nameof(JPH_NarrowPhaseQuery_CollidePoint))]
     public static partial Bool32 JPH_NarrowPhaseQuery_CollidePoint(nint query,
         Vector3* point,
